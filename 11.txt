@@ -1,0 +1,124 @@
+/*******************************************************************************************************************
+NAME       :SIJHAH SADIQUE
+CLASS      :S6 CSE
+ROLL NO    :19
+DATE       :23-03-2017
+PROGRAM NO :10
+AIM        :To find the number of occurance of a character in a string
+******************************************************************************************************************/
+PROGRAM:
+
+section .data.
+        msg1 db'Enter the string',0xa,0xd
+        len1 equ $ - msg1
+                msg2 db'Enter the character to be search'
+        len2 equ $ - msg2
+        msg3 db'The no: of occurences is '
+        len3 equ $ - msg3
+
+section .bss
+        size :resw 1
+        letter :resb 1
+        string : resb 100
+        temp :resb 1
+        count :resw 1
+
+section .text
+        global _start
+
+_start:
+        mov eax,4
+        mov ebx,1
+        mov ecx,msg1
+ mov edx,len1
+ int 80h
+
+ mov word[letter],0
+ call readstring
+ call search
+ call exit
+
+ readstring:
+ pusha
+ cld
+ mov edi,string
+
+ loop1:
+         mov eax,3
+         mov ebx,0
+         mov ecx,temp
+         mov edx,1
+         int 80h
+
+         cmp byte[temp],10
+         je exitloop
+         inc word[size]
+         mov al,byte[temp]
+                stosb
+                jmp loop1
+        exitloop:
+                popa
+                ret
+
+search:
+
+         mov eax,4
+         mov ebx,1
+         mov ecx,msg2
+         mov edx,len2
+         int 80h
+
+        mov eax,3
+        mov ebx,0
+        mov ecx,letter
+        mov edx,1
+        int 80h
+
+
+                pusha
+                cld
+                mov esi,string
+               mov ebx,string
+               mov ecx,0
+               mov cx,word[size]
+              mov dl,0
+              ; dec ecx
+
+
+       let:
+               mov bl,byte[letter]
+               lodsb
+               cmp al,bl
+               jne l1
+               inc dl
+               ;cmp ecx,0
+               ;jmp l2
+              l1: loop let
+
+               add dl,'0'
+               mov [count],dl
+               mov eax,4
+               mov ebx,1
+               mov ecx,msg3
+               mov edx,len3
+               int 80h
+            mov eax,4
+            mov ebx,1
+            mov ecx,count
+            mov edx,1
+            int 80h
+            popa
+            ret
+
+
+    exit:
+            mov eax,1
+            mov ebx,0
+            int 80h
+
+
+OUTPUT:
+
+Enter the string MALAYALAM
+Enter the character to be search A
+The no: of occurences is 4

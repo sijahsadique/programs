@@ -1,0 +1,124 @@
+/*******************************************************************************************************************
+NAME       :SIJHAH SADIQUE
+CLASS      :S6 CSE
+ROLL NO    :19
+DATE       :02-03-2017
+PROGRAM NO :7
+AIM        :To check whether a string is palindrome or not 
+******************************************************************************************************************/
+PROGRAM:
+
+
+
+
+section .data
+	m1: db 'Enter the String : '
+	l1: equ $-m1
+	m2: db 'Not Palindrome'
+	l2: equ $-m2
+	m3: db 'Palindrome'
+	l3: equ $-m3
+
+
+section .bss
+	size: resw 1
+	string: resb 100
+	temp: resb 1
+
+
+section .text
+	global _start
+_start:
+       	mov eax,4
+        mov ebx,1
+        mov ecx,m1
+        mov edx,l1
+        int 80h
+
+        mov word[size],0
+
+
+        call readstring
+        call palindrome
+        call exit
+
+readstring:
+        pusha
+        cld
+        mov edi,string
+
+loop1:
+        mov eax,3
+        mov ebx,0
+        mov ecx,temp
+        mov edx,1
+        int 80h
+
+
+        cmp byte[temp],10
+        je exitloop
+        inc word[size]
+        mov al,byte[temp]
+        stosb
+        jmp loop1
+
+
+
+exitloop:
+
+        popa
+        ret
+
+palindrome:
+
+        pusha
+        cld
+        mov esi,string
+        mov edx,string
+        mov ecx,0
+        mov cx,word[size]
+        dec ecx
+
+
+        cmp ecx,0
+        je p
+
+l:
+
+        lodsb
+        cmp al,byte[edx+ecx]
+        jne exitl
+        loop l
+
+
+exitl:
+        cmp ecx,0
+        je p
+        mov eax,4
+        mov ebx,1
+        mov ecx,m2
+        mov edx,l2
+        int 80h
+
+        popa
+        ret
+
+p:
+
+        mov eax,4
+        mov ebx,1
+        mov ecx,m3
+        mov edx,l3
+        int 80h
+
+	popa
+        ret
+
+exit:
+	mov eax,1
+        mov ebx,0
+        int 80h
+OUTPUT:
+
+Enter the String : MALAYALAM
+Palindrome

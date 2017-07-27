@@ -1,0 +1,3 @@
+open - open and possibly create a file or device
+
+int open(const char *pathname, int flags);

@@ -1,0 +1,70 @@
+#include<stdio.h>
+void main()
+{
+int id,i;
+i=getpid();
+printf("\nP  ID : %d\n",i);
+id=fork();
+wait();
+if(id<0)
+{
+printf("Cannot create the file\n");
+
+}
+if(id==0)
+
+{
+int i1 = getpid();
+printf("\nP1 ID : %d\n",i1);
+int i2 = getppid();
+printf("\nParent of P1  ID : %d\n",i2);
+}
+else
+{
+int id1=fork();
+wait();
+if(id1==0)
+
+{
+int i1 = getpid();
+printf("\nP2  ID : %d\n",i1);
+int i2 = getppid();
+printf("\nParent of P2  ID : %d\n",i2);
+int id4=fork();
+wait();
+if(id4==0)
+
+{
+int i1 = getpid();
+printf("\nP21  ID : %d\n",i1);
+int i2 = getppid();
+printf("\nParent of P21  ID : %d\n",i2);
+}
+else
+{
+int id3=fork();
+wait();
+if(id3==0)
+
+{
+int i1 = getpid();
+printf("\nP22  ID : %d\n",i1);
+int i2 = getppid();
+printf("\nParent of P22  ID : %d\n",i2);
+}
+}
+}
+else
+{
+int id2=fork();
+wait();
+if(id2==0)
+
+{
+int i1 = getpid();
+printf("\nP3  ID : %d\n",i1);
+int i2 = getppid();
+printf("\nParent of P3  ID : %d\n",i2);
+}
+}
+}

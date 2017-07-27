@@ -1,0 +1,156 @@
+/*******************************************************************************************************************
+NAME       :SIJHAH SADIQUE
+CLASS      :S6 CSE
+ROLL NO    :19
+DATE       :09-03-2017
+PROGRAM NO :8
+AIM        :To concatenate two strings
+******************************************************************************************************************/
+PROGRAM:
+
+
+
+
+
+section .data
+        m1: db 'Enter first string : '
+        l1: equ $-m1
+        m2: db 'Enter second string : '
+        l2: equ $-m2
+        m3: db 'The concatenated string is : '
+        l3: equ $-m3
+
+section .bss
+        size1: resw 1
+        string1: resb 100
+
+        size2: resw 1
+        string2: resb 100
+
+        size3: resw 1
+        string3: resb 100
+
+        temp: resb 1
+
+        size_add: resw 1
+
+section .text
+        global _start
+        _start:
+
+        mov eax,4
+        mov ebx,1
+        mov ecx,m1
+        mov edx,l1
+        int 80h
+
+        mov ebx,string1
+        mov ecx,size1
+
+        call read_string
+
+        mov eax,4
+        mov ebx,1
+        mov ecx,m2
+        mov edx,l2
+        int 80h
+
+        mov word[size2],0
+
+        mov ebx,string2
+        mov ecx,size2
+
+        call read_string
+
+        mov eax,4
+        mov ebx,1
+        mov ecx,m3
+        mov edx,l3
+        int 80h
+
+        call concat
+
+        mov eax,4
+        mov ebx,1
+        mov ecx,string3
+        mov edx,size3
+        int 80h
+
+        mov byte[temp],0Ah
+        mov eax,4
+        mov ebx,1
+        mov ecx,temp
+        mov edx,1
+        int 80h
+
+        call exit
+
+        read_string:
+                pusha
+                cld
+                mov edi,ebx
+                mov word[ecx],0
+
+                loop:
+
+                push ecx
+                mov eax,3
+                mov ebx,0
+                mov ecx,temp
+                mov edx,1
+                int 80h
+
+                pop ecx
+
+                cmp byte[temp],10
+                je end_read
+
+                inc word[ecx]
+                mov al,byte[temp]
+                stosb
+                jmp loop
+
+                end_read:
+                popa
+                ret
+
+        concat:
+                pusha
+                cld
+                mov esi,string1
+                mov ebx,string3
+                movzx ecx,word[size1]
+
+                la:
+                lodsb
+                mov byte[ebx],al
+                inc ebx
+                inc word[size3]
+                loop la
+
+                cld
+                mov esi,string2
+                movzx ecx,word[size2]
+
+                lb:
+                lodsb
+                mov byte[ebx],al
+                inc ebx
+                inc word[size3]
+                loop lb
+
+                popa
+                ret
+
+        exit:
+
+                mov eax,1
+                mov ebx,0
+                int 80h
+
+
+OUTPUT:
+
+Enter first string : Hai
+Enter second string : Ram
+The concatenated string is : HaiRam

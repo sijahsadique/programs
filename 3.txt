@@ -1,0 +1,38 @@
+/*******************************************************************************************************************
+NAME       :SIJHAH SADIQUE	
+CLASS      :S6 CSE
+ROLL NO    :19
+DATE       :21-02-2017
+PROGRAM NO :3
+AIM        :To display 10 stars
+******************************************************************************************************************/
+PROGRAM:
+
+
+section .data
+        msg db 'Displaying 10 stars'
+        len equ $ - msg
+        s2 times 10 db '*'
+
+section .text
+        global _start
+
+_start:
+        mov edx, len
+        mov ecx, msg
+        mov ebx, 1
+        mov eax, 4
+        int 80h
+
+        mov edx, 10
+        mov ecx, s2
+        mov ebx, 1
+        mov eax, 4
+        int 80h
+
+        mov eax, 1
+        int 80h
+
+OUTPUT:
+
+**********

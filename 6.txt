@@ -1,0 +1,226 @@
+/*******************************************************************************************************************
+NAME       :SIJHAH SADIQUE
+CLASS      :S6 CSE
+ROLL NO    :19
+DATE       :02-03-2017
+PROGRAM NO :6
+AIM        :To implement a simple calculator
+******************************************************************************************************************/
+PROGRAM:
+
+
+
+section .data
+        msg1:db 'Enter the first number :'
+        len1:equ $ - msg1
+        msg2:db 'Enter the second number :'
+        len2:equ $ - msg2
+        msg3:db 'Enter your choice' ,10,30
+        len3:equ $ - msg3
+        msg4:db'  1.Addition  2.Subtraction  3.Multiplication  4.Division',10,13
+        len4:equ $ - msg4
+        msg5:db'The sum is : '
+        len5:equ $ - msg5
+        msg6:db'The difference is : '
+        len6:equ $ - msg6
+        msg7:db'The product is : '
+        len7:equ $ - msg7
+        msg8:db'The quotient is : '
+        len8:equ $ - msg8
+
+section .bss
+        a:resb 5
+        b:resb 5
+        s:resb 5
+        d:resb 5
+        p:resb 5
+        g:resb 5
+        c:resb 5
+
+
+section .text
+        global _start
+
+_start:
+        mov eax,4
+        mov ebx,1
+        mov ecx,msg1
+        mov edx,len1
+        int 80h
+        mov eax,3
+        mov ebx,2
+        mov ecx,a
+        mov edx,5
+        int 80h
+
+        mov eax,4
+        mov ebx,1
+        mov ecx,msg2
+        mov edx,len2
+        int 80h
+
+        mov eax,3
+        mov ebx,2
+        mov ecx,b
+        mov edx,5
+        int 80h
+
+        mov eax,4
+        mov ebx,1
+        mov ecx,msg3
+        mov edx,len3
+        int 80h
+        mov eax,4
+        mov ebx,1
+        mov ecx,msg4
+        mov edx,len4
+        int 80h
+
+        mov eax,3
+        mov ebx,2
+        mov ecx,c
+        mov edx,5
+        int 80h
+
+
+        mov cl,[c]
+        cmp cl,'1'
+        jz loop1
+
+        cmp cl,'2'
+        jz loop2
+
+        cmp cl,'3'
+        jz loop3
+
+        cmp cl,'4'
+        jz loop4
+
+        jmp loop5
+
+loop1:
+        mov al,[a]
+        add al,[b]
+        sub al,'0'
+        mov [s],al
+
+        mov eax,4
+        mov ebx,1
+        mov ecx,msg5
+        mov edx,len5
+        int 80h
+
+        mov eax,4
+        mov ebx,1
+        mov ecx,s
+        mov edx,5
+        int 80h
+        jmp loop5
+
+loop2:
+        mov al,[a]
+        sub al,[b]
+        add al,'0'
+        mov [d],al
+
+        mov eax,4
+        mov ebx,1
+        mov ecx,msg6
+        mov edx,len6
+        int 80h
+
+        mov eax,4
+        mov ebx,1
+        mov ecx,d
+        mov edx,5
+        int 80h
+        jmp loop5
+
+loop3:
+        mov al,[a]
+        mov bl,[b]
+        sub al,'0'
+        sub bl,'0'
+        mul bl
+        add al,30h
+        mov [p],al
+
+        mov eax,4
+        mov ebx,1
+        mov ecx,msg7
+        mov edx,len7
+        int 80h
+
+        mov eax,4
+        mov ebx,1
+        mov ecx,p
+        mov edx,5
+        int 80h
+        jmp loop5
+
+loop4:
+        mov al,[a]
+        mov bl,[b]
+        sub al,'0'
+        sub bl,'0'
+        div bl
+        add al,'0'
+        mov [g],al
+
+        mov eax,4
+        mov ebx,1
+        mov ecx,msg8
+        mov edx,len8
+        int 80h
+
+        mov eax,4
+        mov ebx,1
+        mov ecx,g
+        mov edx,5
+        int 80h
+        jmp loop5
+
+loop5:
+        mov eax,1
+        mov ebx,0
+        int 80h
+
+
+OUTPUT:
+
+1.ADD 2.SUBTRACT 3.MULTIPLICATION 4.DIVISION
+Enter choice
+1
+Enter first number
+2
+Enter second number
+3
+Sum is
+5
+1.ADD 2.SUBTRACT 3.MULTIPLICATION 4.DIVISION
+Enter choice
+2
+Enter first number
+5
+Enter second number
+3
+Difference is
+2
+1.ADD 2.SUBTRACT 3.MULTIPLICATION 4.DIVISION
+Enter choice
+3
+Enter first number
+5
+Enter second number
+1
+Product is
+5
+1.ADD 2.SUBTRACT 3.MULTIPLICATION 4.DIVISION
+Enter choice
+4
+Enter first number
+6
+Enter second number
+3
+Quotient is
+2

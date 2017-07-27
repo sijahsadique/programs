@@ -1,0 +1,31 @@
+/*******************************************************************************************************************
+NAME       :SIJHAH SADIQUE
+CLASS      :S6 CSE
+ROLL NO    :19
+DATE       :02-02-2017
+PROGRAM NO :1
+AIM        :To print Hello World
+******************************************************************************************************************/
+PROGRAM:
+
+
+section .data
+msg db 'Hello World'
+len equ $ - msg
+
+section .text
+        global _start
+
+_start:
+        mov edx, len
+        mov ecx, msg
+        mov ebx, 1
+        mov eax, 4
+        int 80h
+
+        mov eax, 1
+        int 80h
+
+
+OUTPUT:
+hello world
